@@ -60,6 +60,7 @@ app.get("/test/to-speech", async (req, res) => {
             res.status(500).send(error);
         } else {
             console.log(response);
+            console.log(response.data);
             res.status(200).send(response.data)
         }
     })
