@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="public/static/css/style.css">
+    <title>Text to speech</title>
+</head>
+
+<body>
+    <div class="container wrapper">
+
+        <form action="http://localhost:5051/to-speech" method="post" class="form">
+            <h1 class="title">Text to Speech</h1>
+            <select name="voice" id="voice" class="drop-list">
+                <option value="">Choisissez une voix</option>
+                <option class="drop-list-item" value="alloy">alloy</option>
+                <option class="drop-list-item" value="echo">echo</option>
+                <option class="drop-list-item" value="fable">fable</option>
+                <option class="drop-list-item" value="onyx">onyx</option>
+                <option class="drop-list-item" value="nova">nova</option>
+                <option class="drop-list-item" value="shimmer">shimmer</option>
+            </select>
+            <div class="speech-speed">
+                <label for="speed">Vitesse</label>
+                <input type="range" name="speed" id="speech-speed" class="speech-speed__slider" min=0.2 max=4.0 value=1
+                    step=0.1 onchange="speechSpeedChange()">
+                <p class="speech-speed__value" id="speech-speed__value">1</p>
+            </div>
+            <textarea name="text" id="text" class="text-area" cols="30" rows="10"
+                placeholder="Ecris ton texte ici"></textarea>
+            <button type="submit" id="submit" class="cta" disabled>Générer</button>
+        </form>
+    </div>
+    <script src="/public/static/js/script"></script>
+    <script>
+        var speech_speed = {
+            selector: document.getElementById("speech-speed"),
+            value: document.getElementById("speech-speed__value")
+        }
+        speech_speed.selector.addEventListener("change", (e) => {
+            console.log(e.target.value);
+            speech_speed.value.innerText = e.target.value;
+        })
+    </script>
+
+</body>
+
+</html>
