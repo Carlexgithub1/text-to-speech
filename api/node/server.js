@@ -37,6 +37,7 @@ app.post("/to-speech", async (req, res) => {
     console.log(param);
     await TextTospeech(param, (response, error) => {
         if (error) {
+            console.log(error);
             res.status(500).json({ msg: "Something went wrong", error });
         } else {
             const audioBuffer = Buffer.from(response.data, "base64");
