@@ -28,9 +28,23 @@ app.get("/", (req, res) => {
     res.status(200).send("api is working fine");
 });
 
-app.post("/to-speech", (req, res) => {
-    console.log(req.body);
-    res.status(200).json(req.body);
+app.post("/to-speech", async (req, res) => {
+    const param = {
+        voice: req.body.voice || 'alloy',
+        speed: req.body.speed || 1,
+        input: req.body.text || 'Aujourd\'hui est une journée merveilleuse pour construire quelque chose que les gens aiment!'
+    }
+    console.log(param);
+    await TextTospeech(param, (response, error) => {
+        if (error) {
+            res.status(500).json({ msg: "Something went wrong", error });
+        } else {
+            const audioBuffer = Buffer.from(response.data, "base64");
+            res.setHeader('Content-Type', 'audio/mpeg');
+            res.setHeader('Content-Disposition', 'attachment; filename=Ausio.mp3');
+            res.status(200).send(audioBuffer);
+        }
+    })
 })
 
 app.get("/test/to-speech", async (req, res) => {
