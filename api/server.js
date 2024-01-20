@@ -59,7 +59,7 @@ app.get("/test/to-speech", async (req, res) => {
         if (error) {
             res.status(500).send(error);
         } else {
-            res.status(200).send(response)
+            res.status(200).send(response.data)
         }
     })
 })
