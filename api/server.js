@@ -17,7 +17,7 @@ async function TextTospeech(param, cb) {
         model: 'tts-1',
         voice: param.voice,
         speed: param.speed,
-        input: param.text
+        input: param.input
     }).then(response => {
         cb(response);
     }).catch(error => {
