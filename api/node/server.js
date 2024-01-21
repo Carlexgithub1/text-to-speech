@@ -45,8 +45,8 @@ async function TextTospeech(param, res) {
         voice: param.voice.toString(),
         speed: param.speed,
         input: param.input.toString()
-    }).then(response => {
-        const audio_buffer = Buffer.from(response.arrayBuffer(), "base64");
+    }).then(async response => {
+        const audio_buffer = Buffer.from(await response.arrayBuffer(), "base64");
         res.setHeader('Content-Type', 'audio/mpeg');
         res.setHeader('Content-Disposition', 'attachment; filename=Ausio.mp3');
         res.send(audio_buffer)
