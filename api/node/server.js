@@ -34,12 +34,21 @@ app.get("/test/to-speech", async (req, res) => {
         input: req.query.text || "Aujourd\'hui est une journée merveilleuse pour construire quelque chose que les gens aiment!"
     }
     console.log(param);
-    const ab = res;
-    await TextTospeech(param, req, (response, error) => {
-        SendResponse(ab, response, error)
-    })
+    await TextTospeech(param, res, SendResponse)
 })
 
+async function TextTospeech(param, res, cb) {
+    client.audio.speech.create({
+        model: "tts-1",
+        voice: param.voice.toString(),
+        speed: param.speed,
+        input: param.input.toString()
+    }).then(response => {
+        cb(res, response);
+    }).catch(error => {
+        cb(res, undefined, error)
+    });
+}
 
 function SendResponse(res, response, error) {
     if (error) {
@@ -59,19 +68,6 @@ function SendResponse(res, response, error) {
         //     res.status(200).send(audioBuffer);
         // }
     }
-}
-
-async function TextTospeech(param, req, cb) {
-    client.audio.speech.create({
-        model: "tts-1",
-        voice: param.voice.toString(),
-        speed: param.speed,
-        input: param.input.toString()
-    }).then(response => {
-        cb(req, response);
-    }).catch(error => {
-        cb(req, undefined, error)
-    });
 }
 
 app.listen(PORT);
