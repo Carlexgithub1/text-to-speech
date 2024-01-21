@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const TTSController = require("../../Controllers/TTSController");
+const TTSController = require("./../../Controllers/TTSController");
 
 router.post("/", TTSController.SendAudioFile);
 

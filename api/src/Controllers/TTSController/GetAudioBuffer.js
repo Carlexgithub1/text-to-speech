@@ -1,4 +1,4 @@
-const { ConnectOpenAI } = require("../../Models/OpenAIModel");
+const { ConnectOpenAI } = require("./../../Models/OpenAIModel");
 
 module.exports.getAudioBuffer = async function (param, cb) {
 

@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const TestController = require("../../Controllers/TestController")
+const TestController = require("./../../Controllers/TestController")
 
 router.get("/to-speech", TestController.TestTTS);
 
