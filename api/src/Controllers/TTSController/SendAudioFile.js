@@ -14,6 +14,7 @@ module.exports = async function (req, res) {
             input: req.body.text
         });
     } catch (error) {
+        console.log(error);
         res.status(400).json({ error: `Unable to parse user inputs: ${error.message}` });
         return;
     }
@@ -23,6 +24,7 @@ module.exports = async function (req, res) {
     try {
         audio_buffer = await getAudioBuffer(param);
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: `Something went wrong when trying to generate audio speech: ${error.message}` })
         return
     }
