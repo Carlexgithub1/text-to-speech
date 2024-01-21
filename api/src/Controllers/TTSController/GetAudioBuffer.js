@@ -1,6 +1,6 @@
-const { ConnectOpenAI } = require("./../../Models/OpenAiModel");
+import { ConnectOpenAI } from "./../../Models/OpenAiModel";
 
-module.exports.getAudioBuffer = async function (param, cb) {
+export async function getAudioBuffer(param, cb) {
 
     // Create new OpenAI API client
     let client;
