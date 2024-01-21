@@ -34,11 +34,13 @@ app.get("/test/to-speech", async (req, res) => {
         input: req.query.text || "Aujourd\'hui est une journée merveilleuse pour construire quelque chose que les gens aiment!"
     }
     console.log(param);
-    await TextTospeech(param, SendResponse)
+    await TextTospeech(param, (response, error) => {
+        SendResponse(res, response, error)
+    })
 })
 
 
-function SendResponse(response, error) {
+function SendResponse(res, response, error) {
     if (error) {
         console.log(error);
         res.status(500).send(error);
