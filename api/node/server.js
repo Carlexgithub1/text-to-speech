@@ -51,6 +51,7 @@ async function TextTospeech(param, res) {
         res.setHeader('Content-Disposition', 'attachment; filename=Ausio.mp3');
         res.send(audio_buffer)
     }).catch(error => {
+        console.log(error);
         res.status(500).send(error);
     });
 }
