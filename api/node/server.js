@@ -35,7 +35,7 @@ app.get("/test/to-speech", async (req, res) => {
     }
     console.log(param);
     const ab = res;
-    await TextTospeech(param, (response, error) => {
+    await TextTospeech(param, req, (response, error) => {
         SendResponse(ab, response, error)
     })
 })
@@ -61,16 +61,16 @@ function SendResponse(res, response, error) {
     }
 }
 
-async function TextTospeech(param, cb) {
+async function TextTospeech(param, req, cb) {
     client.audio.speech.create({
         model: "tts-1",
         voice: param.voice.toString(),
         speed: param.speed,
         input: param.input.toString()
     }).then(response => {
-        cb(response);
+        cb(req, response);
     }).catch(error => {
-        cb(undefined, error)
+        cb(req, undefined, error)
     });
 }
 
