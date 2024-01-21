@@ -24,20 +24,21 @@ app.post("/to-speech", async (req, res) => {
         input: req.body.text,
     }
     console.log(param);
-    await TextTospeech(param, res, SendResponse)
+    await TextTospeech(param, res)
 })
 
 app.get("/test/to-speech", async (req, res) => {
+    res.header()
     const param = {
         voice: req.query.voice || "alloy",
         speed: req.query.speed || "1",
         input: req.query.text || "Aujourd\'hui est une journée merveilleuse pour construire quelque chose que les gens aiment!"
     }
     console.log(param);
-    await TextTospeech(param, res, SendResponse)
+    await TextTospeech(param, res)
 })
 
-async function TextTospeech(param, res, cb) {
+async function TextTospeech(param, res) {
     client.audio.speech.create({
         model: "tts-1",
         response_format: "mp3",
@@ -45,30 +46,23 @@ async function TextTospeech(param, res, cb) {
         speed: param.speed,
         input: param.input.toString()
     }).then(response => {
-        cb(res, response);
+        const audio_buffer = Buffer.from(response.arrayBuffer(), "base64");
+        res.setHeader('Content-Type', 'audio/mpeg');
+        res.setHeader('Content-Disposition', 'attachment; filename=Ausio.mp3');
+        res.send(audio_buffer)
     }).catch(error => {
-        cb(res, undefined, error)
+        res.status(500).send(error);
     });
 }
 
-function SendResponse(res, response, error) {
-    if (error) {
-        console.log(error);
-        res.status(500).send(error);
-    } else {
-        console.log(response);
-        res.status(200).send(response)
-
-        // if (error) {
-        //     console.log(error);
-        //     res.status(500).json({ msg: "Something went wrong", error });
-        // } else {
-        //     const audioBuffer = Buffer.from(response.data, "base64");
-        //     res.setHeader('Content-Type', 'audio/mpeg');
-        //     res.setHeader('Content-Disposition', 'attachment; filename=Ausio.mp3');
-        //     res.status(200).send(audioBuffer);
-        // }
-    }
-}
+// if (error) {
+//     console.log(error);
+//     res.status(500).json({ msg: "Something went wrong", error });
+// } else {
+//     const audioBuffer = Buffer.from(response.data, "base64");
+//     res.setHeader('Content-Type', 'audio/mpeg');
+//     res.setHeader('Content-Disposition', 'attachment; filename=Ausio.mp3');
+//     res.status(200).send(audioBuffer);
+// }
 
 app.listen(PORT);
