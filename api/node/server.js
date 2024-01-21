@@ -24,7 +24,7 @@ app.post("/to-speech", async (req, res) => {
         input: req.body.text
     }
     console.log(param);
-    await TextTospeech(param, SendResponse)
+    await TextTospeech(param, res, SendResponse)
 })
 
 app.get("/test/to-speech", async (req, res) => {
