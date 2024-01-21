@@ -21,7 +21,7 @@ app.post("/to-speech", async (req, res) => {
     const param = {
         voice: req.body.voice,
         speed: req.body.speed,
-        input: req.body.text
+        input: req.body.text,
     }
     console.log(param);
     await TextTospeech(param, res, SendResponse)
@@ -42,7 +42,9 @@ async function TextTospeech(param, res, cb) {
         model: "tts-1",
         voice: param.voice.toString(),
         speed: param.speed,
-        input: param.input.toString()
+        input: param.input.toString(),
+        response_format: "mp3"
+
     }).then(response => {
         cb(res, response);
     }).catch(error => {
