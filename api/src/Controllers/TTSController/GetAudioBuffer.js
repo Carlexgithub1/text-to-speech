@@ -1,4 +1,5 @@
-const { ConnectOpenAI } = require("/src/Models/OpenAiModel");
+const { join: pjoin } = require("path");
+const { ConnectOpenAI } = require(pjoin(__dirname, "../../Models/OpenAiModel"));
 
 module.exports.getAudioBuffer = async function (param, cb) {
 

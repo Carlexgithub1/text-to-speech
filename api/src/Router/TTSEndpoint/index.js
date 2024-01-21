@@ -1,5 +1,6 @@
+const { join: pjoin } = require("path");
 const router = require("express").Router();
-const TTSController = require("./../../Controllers/TTSController");
+const TTSController = require(pjoin(__dirname, "../../Controllers/TTSController"));
 
 router.post("/", TTSController.SendAudioFile);
 
