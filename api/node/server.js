@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const openAI = require("openai");
+const { OpenAI } = require("openai");
 const path = require("path");
 const cors = require("cors");
 require("dotenv").config();
@@ -11,7 +11,7 @@ const apiKey = process.env.API_KEY;
 app.use(cors());
 app.use(express.urlencoded({ extends: true }));
 
-const client = new openAI({ apiKey });
+const client = new OpenAI({ apiKey });
 
 app.get("/", (req, res) => {
     res.status(200).send("api is working fine");
@@ -40,11 +40,10 @@ app.get("/test/to-speech", async (req, res) => {
 async function TextTospeech(param, res, cb) {
     client.audio.speech.create({
         model: "tts-1",
+        response_format: "mp3",
         voice: param.voice.toString(),
         speed: param.speed,
-        input: param.input.toString(),
-        response_format: "mp3"
-
+        input: param.input.toString()
     }).then(response => {
         cb(res, response);
     }).catch(error => {
