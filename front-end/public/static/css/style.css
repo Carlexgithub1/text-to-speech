@@ -43,7 +43,9 @@ body {
     text-align: center;
     padding: 1.5rem;
 }
-
+.drop-list{
+    -webkit-appearance: none;
+}
 .drop-list,
 .text-area,
 button {
